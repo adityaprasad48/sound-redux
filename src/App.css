@@ -1,0 +1,40 @@
+body {
+  margin: 0;
+  background-color: #ffffff;
+  color: #000000;
+  font-family: 'Futura', sans-serif;
+  font-size: 1.2em;
+}
+
+p {
+  font-family: 'Futura', sans-serif;
+}
+
+a {
+  color: #000000;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.tools_wrapper {
+  background-color: hsl(54, 100%, 92%);
+  width: 40%;
+  border-radius: 10px;
+  padding: 10px;
+  border-left: 5px solid hsl(252, 100%, 86%);
+}
+
+.tools_wrapper > ul > li {
+  font-size: 20px;
+}
+
+/* Home page Hero */
+.home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}

@@ -1,0 +1,99 @@
+{
+  "name": "cra-template-react-ts-eslint-prettier",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": "Aditya Prasad <adityaprasad20799@gmail.com>",
+  "engines": {
+    "node": ">=10"
+  },
+  "main": "template.json",
+  "description": "A quick start Create React App template with React Router, Redux, TypeScript, Enzyme and custom ESlint configurations",
+  "keywords": [
+    "react",
+    "create-react-app",
+    "cra-template",
+    "template",
+    "enzyme",
+    "eslint",
+    "redux",
+    "react-redux",
+    "react-router",
+    "react-router-dom",
+    "typescript",
+    "prettier"
+  ],
+  "files": [
+    "template",
+    "template.json"
+  ],
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.6.1",
+    "camelize-ts": "^1.0.8",
+    "copyfiles": "^2.4.1",
+    "moment": "^2.29.1",
+    "node-sass": "^6.0.1",
+    "normalizr": "^3.6.1",
+    "path-to-regexp": "^6.2.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.4",
+    "react-router-dom": "^5.2.1",
+    "react-scripts": "4.0.3",
+    "redux": "^4.1.0",
+    "soundcloud.ts": "^0.4.5",
+    "typescript": "^4.3.4",
+    "web-vitals": "^1.1.2",
+    "yup": "^0.32.9"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.11",
+    "@types/react-dom": "^17.0.8",
+    "@types/node": "^12.20.15",
+    "@types/react-redux": "^7.1.16",
+    "@types/react-router-dom": "^5.3.0",
+    "@typescript-eslint/eslint-plugin": "^4.27.0",
+    "@typescript-eslint/parser": "^4.27.0",
+    "eslint": "^7.28.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-typescript": "^12.3.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "prettier": "2.3.1",
+    "rimraf": "^3.0.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "check-types": "tsc --pretty --noEmit",
+    "check-format": "prettier --check .",
+    "check-lint": "eslint . --ext ts --ext tsx --ext js",
+    "format": "prettier --write .",
+    "check-all": "npm run check-format &&  npm run check-lint && npm run check-types",
+    "check-all-build": "npm run check-format && npm run check-lint && npm run check-types && npm run build",
+    "clean-files": "rimraf ./template/public ./template/src && rimraf ./template/.eslintrc",
+    "copy-files": "copyfiles -f -a ./src/. template/src && copyfiles -f -a ./public/. template/public && copyfiles -f .eslintrc template/",
+    "prepublishOnly": "npm run clean-files && npm run copy-files",
+    "reomve-modules": "rimraf node_modules",
+    "lint:js": "eslint . --ext .js,.jsx",
+    "lint:js:fix": "npm run lint:js -- --fix"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
