@@ -1,25 +1,25 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import SongsBodyCard from '../components/SongsBodyCard';
+import SongsBodyCard from './SongsBodyCard';
 
 const defaultProps = {
   playingSongId: null,
 };
 
-const propTypes = {
-  end: PropTypes.number.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  isPlaying: PropTypes.bool.isRequired,
-  likes: PropTypes.shape({}).isRequired,
-  login: PropTypes.func.isRequired,
-  navigateTo: PropTypes.func.isRequired,
-  playingSongId: PropTypes.number,
-  playlist: PropTypes.string.isRequired,
-  playSong: PropTypes.func.isRequired,
-  songs: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  start: PropTypes.number.isRequired,
-  toggleLike: PropTypes.func.isRequired,
-};
+interface Props {
+  end: number;
+  isAuthenticated: boolean;
+  isPlaying: boolean;
+  likes: any;
+  login: any;
+  navigateTo: any;
+  playingSongId?: number;
+  playlist: string;
+  playSong: any;
+  songs: any;
+  start: number;
+  toggleLike: any;
+  isMobile: boolean;
+}
 
 const SongsBodyRendered = ({
   end,
@@ -34,7 +34,7 @@ const SongsBodyRendered = ({
   songs,
   start,
   toggleLike,
-}) => {
+}: Props) => {
   const cellsPerRow = 5;
   const { length } = songs;
   const rows = [];

@@ -1,20 +1,20 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import SongsHeaderGenres from '../components/SongsHeaderGenres';
-import SongsHeaderTimes from '../components/SongsHeaderTimes';
+import SongsHeaderGenres from './SongsHeaderGenres';
+import SongsHeaderTimes from './SongsHeaderTimes';
 
-const propTypes = {
-  genre: PropTypes.string.isRequired,
-  genres: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  navigateTo: PropTypes.func.isRequired,
-  search: PropTypes.string.isRequired,
-  showLikes: PropTypes.bool.isRequired,
-  showPlaylist: PropTypes.bool.isRequired,
-  showStream: PropTypes.bool.isRequired,
-  sticky: PropTypes.bool.isRequired,
-  time: PropTypes.string.isRequired,
-  times: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-};
+
+interface Props {
+  genre: string;
+  genres: any;
+  navigateTo: any;
+  search: string;
+  showLikes: boolean;
+  showPlaylist: boolean;
+  showStream: boolean;
+  sticky: boolean;
+  time: string;
+  times: any;
+}
 
 const SongsHeader = ({
   genre,
@@ -27,7 +27,7 @@ const SongsHeader = ({
   sticky,
   time,
   times,
-}) => {
+}: Props) => {
   if (showLikes || showStream || showPlaylist) {
     return null;
   }
@@ -58,7 +58,5 @@ const SongsHeader = ({
     </div>
   );
 };
-
-SongsHeader.propTypes = propTypes;
 
 export default SongsHeader;

@@ -27,7 +27,7 @@ const NavPlaylistsItem = ({ navigateTo, playlist }: NavPlaylistsItemProps) => {
         </div>
       </div>
       <div className="nav-playlists__item__songs">
-        {tracks.slice(0, 5).map((song) => (
+        {tracks.slice(0, 5).map((song:any) => (
           <div
             className="nav-playlists__item__song"
             key={song.id}

@@ -1,23 +1,18 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import Heart from './heart/Heart';
 import { addCommas } from '../utils/NumberUtils';
+import Heart from './heart/Heart';
 
-const defaultProps = {
-  className: '',
-};
-
-const propTypes = {
-  className: PropTypes.string,
-  commentCount: PropTypes.number.isRequired,
-  favoritingsCount: PropTypes.number.isRequired,
-  id: PropTypes.number.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  liked: PropTypes.bool.isRequired,
-  login: PropTypes.func.isRequired,
-  playbackCount: PropTypes.number.isRequired,
-  toggleLike: PropTypes.func.isRequired,
-};
+interface StateProps {
+  className?: string;
+  commentCount: number;
+  favoritingsCount: number;
+  id: number;
+  isAuthenticated: boolean;
+  liked: boolean;
+  login: any;
+  playbackCount: number;
+  toggleLike: any;
+}
 
 const Stats = ({
   className,
@@ -29,7 +24,7 @@ const Stats = ({
   login,
   playbackCount,
   toggleLike,
-}) => (
+}: StateProps) => (
   <div className={`stats ${className}`}>
     <Heart
       className="stats__stat stats__stat--heart"
@@ -42,20 +37,13 @@ const Stats = ({
     />
     <div className="stats__stat">
       <i className="stats__stat__icon ion-play" />
-      <span className="stats__stat__text">
-        {addCommas(playbackCount)}
-      </span>
+      <span className="stats__stat__text">{addCommas(playbackCount)}</span>
     </div>
     <div className="stats__stat">
       <i className="stats__stat__icon ion-chatbubble" />
-      <span className="stats__stat__text">
-        {addCommas(commentCount)}
-      </span>
+      <span className="stats__stat__text">{addCommas(commentCount)}</span>
     </div>
   </div>
 );
-
-Stats.defaultProps = defaultProps;
-Stats.propTypes = propTypes;
 
 export default Stats;

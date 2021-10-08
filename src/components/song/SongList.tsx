@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import SongListItem from '../components/SongListItem';
+import SongListItem from './SongListItem';
+
 
 const defaultProps = {
   className: '',
@@ -9,21 +9,21 @@ const defaultProps = {
   playingSongId: null,
 };
 
-const propTypes = {
-  className: PropTypes.string,
-  id: PropTypes.number,
-  isAuthenticated: PropTypes.bool.isRequired,
-  likes: PropTypes.shape({}).isRequired,
-  offsetIndex: PropTypes.number,
-  login: PropTypes.func.isRequired,
-  navigateTo: PropTypes.func.isRequired,
-  player: PropTypes.shape({}).isRequired,
-  playingSongId: PropTypes.number,
-  playlist: PropTypes.string.isRequired,
-  playSong: PropTypes.func.isRequired,
-  songs: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  toggleLike: PropTypes.func.isRequired,
-};
+interface Props {
+  className?: string;
+  id?: number;
+  isAuthenticated: boolean;
+  likes: any;
+  offsetIndex?: number;
+  login: any;
+  navigateTo: any;
+  player: any;
+  playingSongId?: number;
+  playlist: string;
+  playSong: any;
+  songs: any;
+  toggleLike: any;
+}
 
 const SongList = ({
   className,
@@ -39,10 +39,10 @@ const SongList = ({
   playSong,
   songs,
   toggleLike,
-}) => (
+}: Props) => (
   <div className={`song-list ${className}`}>
-    {songs.map((song, i) => (song.id !== id
-      ? (
+    {songs.map((song: any, i: any) =>
+      song.id !== id ? (
         <SongListItem
           index={i + offsetIndex}
           isActive={playingSongId === song.id}
@@ -58,11 +58,8 @@ const SongList = ({
           toggleLike={toggleLike}
         />
       ) : null
-    ))}
+    )}
   </div>
 );
-
-SongList.defaultProps = defaultProps;
-SongList.propTypes = propTypes;
 
 export default SongList;

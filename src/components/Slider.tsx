@@ -93,7 +93,4 @@ class Slider extends Component {
   }
 }
 
-Slider.defaultProps = defaultProps;
-Slider.propTypes = propTypes;
-
 export default Slider;

@@ -1,45 +1,30 @@
 /* global window */
-import React, { Component } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
-const stickyOnScroll = (InnerComponent, scrollThreshold) => {
-  class StickyOnScrollComponent extends Component {
-    constructor(props) {
-      super(props);
-      this.onScroll = this.onScroll.bind(this);
-      this.state = { sticky: false };
-    }
+const stickyOnScroll = (InnerComponent: any, scrollThreshold: any) => {
+  const StickyOnScrollComponent = () => {
+    const [sticky, setSticky] = useState(false);
 
-    componentDidMount() {
-      window.addEventListener('scroll', this.onScroll, false);
-    }
-
-    componentWillUnmount() {
-      window.removeEventListener('scroll', this.onScroll, false);
-    }
-
-    onScroll() {
+    const handleScroll = useCallback(() => {
       const { scrollY } = window;
-      const { sticky } = this.state;
       const scrolledPastThreshold = scrollY >= scrollThreshold;
 
       if (scrolledPastThreshold && !sticky) {
-        this.setState({ sticky: true });
+        setSticky(true);
       } else if (!scrolledPastThreshold && sticky) {
-        this.setState({ sticky: false });
+        setSticky(false);
       }
-    }
+    }, [sticky]);
 
-    render() {
-      const { sticky } = this.state;
+    useEffect(() => {
+      window.addEventListener('scroll', handleScroll);
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }, [handleScroll]);
 
-      return (
-        <InnerComponent
-          {...this.props}
-          sticky={sticky}
-        />
-      );
-    }
-  }
+    return <InnerComponent {...props} sticky={sticky} />;
+  };
 
   return StickyOnScrollComponent;
 };

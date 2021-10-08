@@ -1,27 +1,27 @@
-import PropTypes from 'prop-types';
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import audio from './audio';
-import Link from './Link';
-import Slider from './Slider';
 import { SONG_PATH, USER_PATH } from '../constants/RouterConstants';
 import { formatSeconds } from '../utils/NumberUtils';
 import volumeClassName from '../utils/PlayerUtils';
+import audio from './audio';
+import Link from './Link';
+import Slider from './Slider';
 
-const propTypes = {
-  changeCurrentTime: PropTypes.func.isRequired,
-  changeVolume: PropTypes.func.isRequired,
-  navigateTo: PropTypes.func.isRequired,
-  player: PropTypes.shape({}).isRequired,
-  playNextSongFromButton: PropTypes.func.isRequired,
-  playPrevSong: PropTypes.func.isRequired,
-  showHistory: PropTypes.bool.isRequired,
-  song: PropTypes.shape({}).isRequired,
-  toggleMuted: PropTypes.func.isRequired,
-  togglePlay: PropTypes.func.isRequired,
-  toggleRepeat: PropTypes.func.isRequired,
-  toggleShowHistory: PropTypes.func.isRequired,
-  toggleShuffle: PropTypes.func.isRequired,
-};
+interface Props {
+  changeCurrentTime: any;
+  changeVolume: any;
+  navigateTo: any;
+  player: any;
+  playNextSongFromButton: any;
+  playPrevSong: any;
+  showHistory: boolean;
+  song: any;
+  toggleMuted: any;
+  togglePlay: any;
+  toggleRepeat: any;
+  toggleShowHistory: any;
+  toggleShuffle: any;
+}
 
 const Player = ({
   changeCurrentTime,
@@ -37,7 +37,7 @@ const Player = ({
   toggleRepeat,
   toggleShowHistory,
   toggleShuffle,
-}) => {
+}: Props) => {
   const { currentTime, duration, isPlaying, muted, repeat, shuffle } = player;
   const { artworkUrl, id, title, user } = song;
   const { username } = user;
@@ -48,7 +48,10 @@ const Player = ({
       <div className="player__inner container">
         <div className="player__section player__section--song">
           <div className="player__song">
-            <div className="player__song__artwork" style={{ backgroundImage: `url(${artworkUrl})` }} />
+            <div
+              className="player__song__artwork"
+              style={{ backgroundImage: `url(${artworkUrl})` }}
+            />
             <div className="player__song__main">
               <Link
                 className="player__song__title"
@@ -75,7 +78,8 @@ const Player = ({
               className="player__button"
               onClick={playPrevSong}
               role="button"
-              tabIndex="0"
+              tabIndex={0}
+              aria-hidden
             >
               <i className="player__button__icon ion-ios-rewind" />
             </div>
@@ -83,15 +87,21 @@ const Player = ({
               className="player__button"
               onClick={togglePlay}
               role="button"
-              tabIndex="0"
+              tabIndex={0}
+              aria-hidden
             >
-              <i className={`player__button__icon ion-ios-${isPlaying ? 'pause' : 'play'}`} />
+              <i
+                className={`player__button__icon ion-ios-${
+                  isPlaying ? 'pause' : 'play'
+                }`}
+              />
             </div>
             <div
               className="player__button"
               onClick={playNextSongFromButton}
               role="button"
-              tabIndex="0"
+              tabIndex={0}
+              aria-hidden
             >
               <i className="player__button__icon ion-ios-fastforward" />
             </div>
@@ -107,35 +117,42 @@ const Player = ({
         <div className="player__section player__section--time">
           <div className="player__time">
             {formatSeconds(currentTime)}
-            <div className="player__time__separator">
-              /
-            </div>
+            <div className="player__time__separator">/</div>
             {formatSeconds(duration)}
           </div>
         </div>
         <div className="player__section player__section--options">
           <div className="player__buttons player__buttons--options">
             <div
-              className={`player__button ${repeat ? 'player__button--active' : ''}`}
+              className={`player__button ${
+                repeat ? 'player__button--active' : ''
+              }`}
               onClick={toggleRepeat}
               role="button"
-              tabIndex="0"
+              tabIndex={0}
+              aria-hidden
             >
               <i className="player__button__icon ion-loop" />
             </div>
             <div
-              className={`player__button ${shuffle ? 'player__button--active' : ''}`}
+              className={`player__button ${
+                shuffle ? 'player__button--active' : ''
+              }`}
               onClick={toggleShuffle}
               role="button"
-              tabIndex="0"
+              tabIndex={0}
+              aria-hidden
             >
               <i className="player__button__icon ion-shuffle" />
             </div>
             <div
-              className={`player__button ${showHistory ? 'player__button--active' : ''}`}
+              className={`player__button ${
+                showHistory ? 'player__button--active' : ''
+              }`}
               onClick={toggleShowHistory}
               role="button"
-              tabIndex="0"
+              tabIndex={0}
+              aria-hidden
             >
               <i className="player__button__icon ion-android-list" />
             </div>
@@ -143,25 +160,28 @@ const Player = ({
               className="player__button player__button--volume"
               onClick={toggleMuted}
               role="button"
-              tabIndex="0"
+              tabIndex={0}
+              aria-hidden
             >
-              <i className={`player__button__icon ion-android-volume-${muted ? 'off' : 'mute'}`} />
-              <i className={`player__button__icon player__button__icon--absolute ${volumeClassName(volume)}`} />
+              <i
+                className={`player__button__icon ion-android-volume-${
+                  muted ? 'off' : 'mute'
+                }`}
+              />
+              <i
+                className={`player__button__icon player__button__icon--absolute ${volumeClassName(
+                  volume
+                )}`}
+              />
             </div>
           </div>
         </div>
         <div className="player__section player__section--volume">
-          <Slider
-            max={1}
-            onChange={changeVolume}
-            value={volume}
-          />
+          <Slider max={1} onChange={changeVolume} value={volume} />
         </div>
       </div>
     </div>
   );
 };
-
-Player.propTypes = propTypes;
 
 export default audio(Player);

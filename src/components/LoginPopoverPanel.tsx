@@ -1,21 +1,19 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
-const propTypes = {
-  login: PropTypes.func.isRequired,
-};
+interface Props {
+  login: any;
+}
 
-const LoginPopoverPanel = ({ login }) => (
+const LoginPopoverPanel = ({ login }: Props) => (
   <div
     className="button button--orange button--block button--margin"
     onClick={login}
     role="button"
-    tabIndex="0"
+    tabIndex={0}
+    aria-hidden
   >
     Sign into SoundCloud
   </div>
 );
-
-LoginPopoverPanel.propTypes = propTypes;
 
 export default LoginPopoverPanel;

@@ -1,14 +1,13 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
-const propTypes = {
-  isActive: PropTypes.bool.isRequired,
-  onMouseMove: PropTypes.func.isRequired,
-  playSong: PropTypes.func.isRequired,
-  seek: PropTypes.func.isRequired,
-};
+interface Props {
+  isActive: boolean;
+  onMouseMove: any;
+  playSong: any;
+  seek: any;
+}
 
-const WaveformEvents = ({ isActive, onMouseMove, playSong, seek }) => {
+const WaveformEvents = ({ isActive, onMouseMove, playSong, seek }: Props) => {
   if (isActive) {
     return (
       <div
@@ -27,11 +26,10 @@ const WaveformEvents = ({ isActive, onMouseMove, playSong, seek }) => {
       className="waveform__events"
       onMouseDown={playSong}
       role="button"
-      tabIndex="0"
+      aria-hidden
+      tabIndex={0}
     />
   );
 };
-
-WaveformEvents.propTypes = propTypes;
 
 export default WaveformEvents;

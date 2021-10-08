@@ -10,6 +10,7 @@ interface NavUserProps {
   login: any;
   logout: any;
   user: any;
+  showPlaylist: boolean;
 }
 
 const NavUser = ({

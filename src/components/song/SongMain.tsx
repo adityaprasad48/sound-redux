@@ -1,25 +1,25 @@
-import PropTypes from 'prop-types';
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import ArtworkPlay from 'components/ArtworkPlay';
+import Link from 'components/Link';
+import Stats from 'components/Stats';
+import Waveform from 'components/wave/Waveform';
+import IMAGE_SIZES from 'constants/ImageConstants';
+import { USER_PATH } from 'constants/RouterConstants';
 import React from 'react';
-import ArtworkPlay from '../components/ArtworkPlay';
-import Link from '../components/Link';
-import Stats from '../components/Stats';
-import Waveform from '../components/Waveform';
-import { USER_PATH } from '../constants/RouterConstants';
-import IMAGE_SIZES from '../constants/ImageConstants';
-import getImageUrl from '../utils/ImageUtils';
+import getImageUrl from 'utils/ImageUtils';
 
-const propTypes = {
-  isActive: PropTypes.bool.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  liked: PropTypes.bool.isRequired,
-  login: PropTypes.func.isRequired,
-  navigateTo: PropTypes.func.isRequired,
-  player: PropTypes.shape({}).isRequired,
-  playlist: PropTypes.string.isRequired,
-  playSong: PropTypes.func.isRequired,
-  song: PropTypes.shape({}).isRequired,
-  toggleLike: PropTypes.func.isRequired,
-};
+interface Props {
+  isActive: boolean;
+  isAuthenticated: boolean;
+  liked: boolean;
+  login: any;
+  navigateTo: any;
+  player: any;
+  playlist: string;
+  playSong: any;
+  song: any;
+  toggleLike: any;
+}
 
 const SongMain = ({
   isActive,
@@ -32,7 +32,7 @@ const SongMain = ({
   playSong,
   song,
   toggleLike,
-}) => {
+}: Props) => {
   const { isPlaying } = player;
   const {
     artworkUrl,
@@ -51,7 +51,10 @@ const SongMain = ({
         <div
           className="song-main__artwork__image"
           style={{
-            backgroundImage: `url(${getImageUrl(artworkUrl, IMAGE_SIZES.LARGE)})`,
+            backgroundImage: `url(${getImageUrl(
+              artworkUrl,
+              IMAGE_SIZES.LARGE
+            )})`,
           }}
         >
           <ArtworkPlay
@@ -64,9 +67,7 @@ const SongMain = ({
         </div>
       </div>
       <div className="song-main__main">
-        <div className="song-main__title">
-          {song.title}
-        </div>
+        <div className="song-main__title">{song.title}</div>
         <div className="song-main__user">
           <div
             className="song-main__user__avatar"
@@ -92,9 +93,7 @@ const SongMain = ({
           playbackCount={playbackCount}
           toggleLike={toggleLike}
         />
-        <div className="song-main__description">
-          {description}
-        </div>
+        <div className="song-main__description">{description}</div>
       </div>
       <Waveform
         className="song-main__waveform"
@@ -108,7 +107,5 @@ const SongMain = ({
     </div>
   );
 };
-
-SongMain.propTypes = propTypes;
 
 export default SongMain;

@@ -1,37 +1,18 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
 
-const propTypes = {
-  audioUrl: PropTypes.string.isRequired,
-  onLoadedMetadata: PropTypes.func.isRequired,
-  onLoadStart: PropTypes.func.isRequired,
-  onPause: PropTypes.func.isRequired,
-  onPlay: PropTypes.func.isRequired,
-  onTimeUpdate: PropTypes.func.isRequired,
-  onVolumeChange: PropTypes.func.isRequired,
-  playNextSong: PropTypes.func.isRequired,
+interface Props{
+ audioUrl: string;
+  onLoadedMetadata:any;
+  onLoadStart:any;
+  onPause:any;
+  onPlay:any;
+  onTimeUpdate:any;
+  onVolumeChange:any;
+  playNextSong:any;
 };
 
-const audio = (InnerComponent) => {
-  class AudioComponent extends Component {
-    constructor() {
-      super();
-      this.audioElement = null;
-
-      this.onEnded = this.onEnded.bind(this);
-      this.onLoadedMetadata = this.onLoadedMetadata.bind(this);
-      this.onLoadStart = this.onLoadStart.bind(this);
-      this.onPause = this.onPause.bind(this);
-      this.onPlay = this.onPlay.bind(this);
-      this.onTimeUpdate = this.onTimeUpdate.bind(this);
-      this.onVolumeChange = this.onVolumeChange.bind(this);
-
-      this.changeCurrentTime = this.changeCurrentTime.bind(this);
-      this.changeVolume = this.changeVolume.bind(this);
-      this.toggleMuted = this.toggleMuted.bind(this);
-      this.togglePlay = this.togglePlay.bind(this);
-    }
-
+const audio = (InnerComponent:any) => {
+  const AudioComponent = () => {
     componentDidMount() {
       const { audioElement } = this;
       audioElement.play();
@@ -45,7 +26,7 @@ const audio = (InnerComponent) => {
       }
     }
 
-    onEnded() {
+    const handleEnded = () => {
       const { playNextSong } = this.props;
       playNextSong();
     }
@@ -109,37 +90,35 @@ const audio = (InnerComponent) => {
       }
     }
 
-    render() {
       const { audioUrl } = this.props;
 
       return (
         <div>
           <audio
             id="audio"
-            onEnded={this.onEnded}
-            onLoadedMetadata={this.onLoadedMetadata}
-            onLoadStart={this.onLoadStart}
-            onPause={this.onPause}
-            onPlay={this.onPlay}
-            onTimeUpdate={this.onTimeUpdate}
-            onVolumeChange={this.onVolumeChange}
-            ref={(node) => { this.audioElement = node; }}
+            onEnded={onEnded}
+            onLoadedMetadata={onLoadedMetadata}
+            onLoadStart={onLoadStart}
+            onPause={onPause}
+            onPlay={onPlay}
+            onTimeUpdate={onTimeUpdate}
+            onVolumeChange={onVolumeChange}
+            ref={(node) => {
+              audioElement = node;
+            }}
             src={audioUrl}
           />
           <InnerComponent
-            {...this.state}
-            {...this.props}
-            changeCurrentTime={this.changeCurrentTime}
-            changeVolume={this.changeVolume}
-            toggleMuted={this.toggleMuted}
-            togglePlay={this.togglePlay}
+            {...state}
+            {...props}
+            changeCurrentTime={changeCurrentTime}
+            changeVolume={changeVolume}
+            toggleMuted={toggleMuted}
+            togglePlay={togglePlay}
           />
         </div>
       );
-    }
   }
-
-  AudioComponent.propTypes = propTypes;
 
   return AudioComponent;
 };

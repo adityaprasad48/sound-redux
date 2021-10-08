@@ -1,26 +1,26 @@
-import PropTypes from 'prop-types';
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import ArtworkPlay from 'components/ArtworkPlay';
+import Link from 'components/Link';
+import Stats from 'components/Stats';
+import Waveform from 'components/wave/Waveform';
+import IMAGE_SIZES from 'constants/ImageConstants';
+import { USER_PATH } from 'constants/RouterConstants';
 import React from 'react';
-import ArtworkPlay from '../components/ArtworkPlay';
-import Link from '../components/Link';
-import Stats from '../components/Stats';
-import Waveform from '../components/Waveform';
-import { SONG_PATH, USER_PATH } from '../constants/RouterConstants';
-import IMAGE_SIZES from '../constants/ImageConstants';
-import getImageUrl from '../utils/ImageUtils';
+import getImageUrl from 'utils/ImageUtils';
 
-const propTypes = {
-  index: PropTypes.number.isRequired,
-  isActive: PropTypes.bool.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  liked: PropTypes.bool.isRequired,
-  login: PropTypes.func.isRequired,
-  navigateTo: PropTypes.func.isRequired,
-  player: PropTypes.shape({}).isRequired,
-  playlist: PropTypes.string.isRequired,
-  playSong: PropTypes.func.isRequired,
-  song: PropTypes.shape({}).isRequired,
-  toggleLike: PropTypes.func.isRequired,
-};
+interface Props {
+  index: number;
+  isActive: boolean;
+  isAuthenticated: boolean;
+  liked: boolean;
+  login: any;
+  navigateTo: any;
+  player: any;
+  playlist: string;
+  playSong: any;
+  song: any;
+  toggleLike: any;
+}
 
 const SongListItem = ({
   index,
@@ -34,18 +34,31 @@ const SongListItem = ({
   playSong,
   song,
   toggleLike,
-}) => {
+}: Props) => {
   const { isPlaying } = player;
-  const { artworkUrl, commentCount, favoritingsCount, id, playbackCount, title, user } = song;
+  const {
+    artworkUrl,
+    commentCount,
+    favoritingsCount,
+    id,
+    playbackCount,
+    title,
+    user,
+  } = song;
   const { avatarUrl, username } = user;
 
   return (
-    <div className={`song-list__item ${isActive ? 'song-list__item--active' : ''}`}>
+    <div
+      className={`song-list__item ${isActive ? 'song-list__item--active' : ''}`}
+    >
       <div className="song-list__item__artwork">
         <div
           className="song-list__item__artwork__image"
           style={{
-            backgroundImage: `url(${getImageUrl(artworkUrl, IMAGE_SIZES.LARGE)})`,
+            backgroundImage: `url(${getImageUrl(
+              artworkUrl,
+              IMAGE_SIZES.LARGE
+            )})`,
           }}
         >
           <ArtworkPlay
@@ -62,7 +75,6 @@ const SongListItem = ({
           className="song-list__item__title"
           navigateTo={navigateTo}
           keys={{ id }}
-          path={SONG_PATH}
         >
           {title}
         </Link>
@@ -106,7 +118,5 @@ const SongListItem = ({
     </div>
   );
 };
-
-SongListItem.propTypes = propTypes;
 
 export default SongListItem;

@@ -1,58 +1,53 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
 import { compileHash } from '../utils/RouterUtils';
 
-const defaultProps = {
-  className: '',
-  keys: {},
-  onClick: null,
-  options: {},
-  title: '',
-};
+// const defaultProps = {
+//   className: '',
+//   keys: {},
+//   onClick: null,
+//   options: {},
+//   title: '',
+// };
 
-const propTypes = {
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-  onClick: PropTypes.func,
-  navigateTo: PropTypes.func.isRequired,
-  keys: PropTypes.shape({}),
-  options: PropTypes.shape({}),
-  path: PropTypes.string.isRequired,
-  title: PropTypes.string,
-};
+interface Props {
+  className: any;
+  children?: any;
+  onClick?: any;
+  navigateTo: any;
+  keys?: any;
+  options?: any;
+  path?: string;
+  title?: string;
+}
 
-class Link extends Component {
-  constructor() {
-    super();
-    this.onClick = this.onClick.bind(this);
-  }
-
-  onClick(e) {
+const Link = ({
+  children,
+  className,
+  onClick,
+  navigateTo,
+  keys,
+  options,
+  path,
+  title,
+}: Props) => {
+  const handleClick = (e: any) => {
     e.preventDefault();
-    const { keys, navigateTo, onClick, options, path } = this.props;
     navigateTo({ path, keys, options });
     if (typeof onClick === 'function') {
       onClick();
     }
-  }
+  };
 
-  render() {
-    const { children, className, keys, options, path, title } = this.props;
-
-    return (
-      <a
-        className={className}
-        href={`/${compileHash({ path, keys, options })}`}
-        onClick={this.onClick}
-        title={title}
-      >
-        {children}
-      </a>
-    );
-  }
-}
-
-Link.defaultProps = defaultProps;
-Link.propTypes = propTypes;
+  return (
+    <a
+      className={className}
+      href={`/${compileHash({ path, keys, options })}`}
+      onClick={handleClick}
+      title={title}
+    >
+      {children}
+    </a>
+  );
+};
 
 export default Link;
