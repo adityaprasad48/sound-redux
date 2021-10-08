@@ -36,7 +36,7 @@ const SongsBodyRendered = ({
   toggleLike,
 }) => {
   const cellsPerRow = 5;
-  const length = songs.length;
+  const { length } = songs;
   const rows = [];
 
   for (let i = start; i < end; i += cellsPerRow) {
@@ -63,21 +63,18 @@ const SongsBodyRendered = ({
               toggleLike={toggleLike}
             />
           ) : null}
-        </div>,
+        </div>
       );
     }
 
     rows.push(
       <div className="row" key={i}>
         {row}
-      </div>,
+      </div>
     );
   }
 
   return <div>{rows}</div>;
 };
-
-SongsBodyRendered.defaultProps = defaultProps;
-SongsBodyRendered.propTypes = propTypes;
 
 export default SongsBodyRendered;

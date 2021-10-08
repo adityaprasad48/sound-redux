@@ -1,4 +1,4 @@
-const offsetLeft = (element) => {
+const offsetLeft = (element:any) => {
   let el = element;
   let x = el.offsetLeft;
 

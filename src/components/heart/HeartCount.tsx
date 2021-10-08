@@ -1,5 +1,5 @@
 import React from 'react';
-import { addCommas } from '../utils/NumberUtils';
+import { addCommas } from 'utils/NumberUtils';
 
 interface HeartCountProps {
   favoritingsCount: Number;

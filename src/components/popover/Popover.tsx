@@ -1,58 +1,34 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
-import PopoverPanel from '../components/PopoverPanel';
+import React, { useState } from 'react';
+import PopoverPanel from './PopoverPanel';
 
-const defaultProps = {
-  className: '',
-};
-
-const propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.node.isRequired,
-};
-
-class Popover extends Component {
-  constructor() {
-    super();
-    this.toggleIsOpen = this.toggleIsOpen.bind(this);
-    this.state = { isOpen: false };
-  }
-
-  toggleIsOpen() {
-    this.setState(state => ({
-      isOpen: !state.isOpen,
-    }));
-  }
-
-  render() {
-    const { isOpen } = this.state;
-    const { className, children } = this.props;
-
-    return (
-      <div className={`popover ${className}`}>
-        <span
-          className="popover__trigger"
-          onClick={this.toggleIsOpen}
-          role="button"
-          tabIndex="0"
-        >
-          {children[0]}
-        </span>
-        {isOpen
-          ? (
-            <PopoverPanel
-              toggleIsOpen={this.toggleIsOpen}
-            >
-              {children[1]}
-            </PopoverPanel>
-          ) : null
-        }
-      </div>
-    );
-  }
+interface PopoverProps {
+  className: string;
+  children: any;
 }
 
-Popover.defaultProps = defaultProps;
-Popover.propTypes = propTypes;
+const Popover = ({ className, children }: PopoverProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleIsOpen = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <div className={`popover ${className}`}>
+      <span
+        className="popover__trigger"
+        onClick={toggleIsOpen}
+        role="button"
+        tabIndex={0}
+        aria-hidden
+      >
+        {children[0]}
+      </span>
+      {isOpen ? (
+        <PopoverPanel toggleIsOpen={toggleIsOpen}>{children[1]}</PopoverPanel>
+      ) : null}
+    </div>
+  );
+};
 
 export default Popover;

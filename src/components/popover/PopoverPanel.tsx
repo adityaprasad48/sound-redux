@@ -1,18 +1,13 @@
 /* global document */
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
 
-const propTypes = {
-  children: PropTypes.node.isRequired,
-  toggleIsOpen: PropTypes.func.isRequired,
+interface PopoverPanelProps  {
+  children: any,
+  toggleIsOpen:any,
 };
 
-class PopoverPanel extends Component {
-  constructor() {
-    super();
-    this.onClick = this.onClick.bind(this);
-    this.node = null;
-  }
+const PopoverPanel  = ({children, toggleIsOpen}:PopoverPanelProps) => {
+  
 
   componentDidMount() {
     document.addEventListener('click', this.onClick);
@@ -22,7 +17,7 @@ class PopoverPanel extends Component {
     document.removeEventListener('click', this.onClick);
   }
 
-  onClick(e) {
+  const handleClick = (e:any) => {
     const { target } = e;
     const { tagName } = target;
     const role = target.getAttribute('role');
@@ -32,21 +27,16 @@ class PopoverPanel extends Component {
     const targetIsLink = role === 'link' || tagName === 'A';
 
     if (outsideClick || targetIsButton || targetIsLink) {
-      const { toggleIsOpen } = this.props;
       toggleIsOpen();
     }
   }
 
-  render() {
-    const { children } = this.props;
     return (
       <div className="popover__panel" ref={(node) => { this.node = node; }}>
         {children}
       </div>
     );
-  }
 }
 
-PopoverPanel.propTypes = propTypes;
 
 export default PopoverPanel;

@@ -1,27 +1,28 @@
-import PropTypes from 'prop-types';
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import Link from 'components/Link';
+import { SONGS_PATH } from 'constants/RouterConstants';
 import React from 'react';
-import Link from '../components/Link';
-import NavPlaylists from '../components/NavPlaylists';
-import NavStream from '../components/NavStream';
-import { SONGS_PATH } from '../constants/RouterConstants';
+import NavPlaylists from './NavPlaylists';
+import NavStream from './NavStream';
+
 
 const defaultProps = {
   navPlaylist: null,
 };
 
-const propTypes = {
-  fetchNewStreamSongs: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  loadNewStreamSongs: PropTypes.func.isRequired,
-  navigateTo: PropTypes.func.isRequired,
-  navPlaylist: PropTypes.shape({}),
-  navPlaylists: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  newStreamSongs: PropTypes.arrayOf(PropTypes.number).isRequired,
-  showLikes: PropTypes.bool.isRequired,
-  showPlaylist: PropTypes.bool.isRequired,
-  showStream: PropTypes.bool.isRequired,
-  streamFutureUrl: PropTypes.string.isRequired,
-};
+interface NavSessionProps {
+  fetchNewStreamSongs: any;
+  isAuthenticated: boolean;
+  loadNewStreamSongs: any;
+  navigateTo: any;
+  navPlaylist: any;
+  navPlaylists: any;
+  newStreamSongs: any;
+  showLikes: boolean;
+  showPlaylist: boolean;
+  showStream: boolean;
+  streamFutureUrl: string;
+}
 
 const NavSession = ({
   fetchNewStreamSongs,
@@ -35,7 +36,7 @@ const NavSession = ({
   showPlaylist,
   showStream,
   streamFutureUrl,
-}) => {
+}: NavSessionProps) => {
   if (!isAuthenticated) {
     return null;
   }
@@ -51,7 +52,9 @@ const NavSession = ({
         streamFutureUrl={streamFutureUrl}
       />
       <Link
-        className={`nav-session__item ${showLikes ? 'nav-session__item--active' : ''}`}
+        className={`nav-session__item ${
+          showLikes ? 'nav-session__item--active' : ''
+        }`}
         navigateTo={navigateTo}
         path={SONGS_PATH}
         options={{ s: 'likes' }}
@@ -67,8 +70,5 @@ const NavSession = ({
     </div>
   );
 };
-
-NavSession.defaultProps = defaultProps;
-NavSession.propTypes = propTypes;
 
 export default NavSession;

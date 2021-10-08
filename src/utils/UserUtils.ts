@@ -1,4 +1,4 @@
-export const getLocation = (user) => {
+export const getLocation = (user: any) => {
   const { city, country } = user;
 
   if (city && country) {
@@ -16,7 +16,7 @@ export const getLocation = (user) => {
   return 'Earth';
 };
 
-export const getSocialIcon = (service) => {
+export const getSocialIcon = (service: any) => {
   switch (service) {
     case 'facebook':
       return 'ion-social-facebook';

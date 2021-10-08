@@ -11,19 +11,19 @@ const defaultProps = {
 };
 
 const propTypes = {
-  height: PropTypes.number.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  isFetching: PropTypes.bool.isRequired,
-  isMobile: PropTypes.bool.isRequired,
-  isPlaying: PropTypes.bool.isRequired,
-  likes: PropTypes.shape({}).isRequired,
-  login: PropTypes.func.isRequired,
-  navigateTo: PropTypes.func.isRequired,
-  playingSongId: PropTypes.number,
-  playlist: PropTypes.string.isRequired,
-  playSong: PropTypes.func.isRequired,
-  songs: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  toggleLike: PropTypes.func.isRequired,
+  height: any,
+  isAuthenticated: any,
+  isFetching: any,
+  isMobile: any,
+  isPlaying: any,
+  likes: anysRequired,
+  login: any,
+  navigateTo: any,
+  playingSongId: any ,
+   playlist: any,
+  playSong: any,
+  songs: anyisRequired,
+  toggleLike: any,
 };
 
 class SongBody extends Component {
@@ -96,7 +96,6 @@ class SongBody extends Component {
   }
 }
 
-SongBody.defaultProps = defaultProps;
-SongBody.propTypes = propTypes;
+
 
 export default SongBody;

@@ -1,24 +1,22 @@
 /* global document */
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
 
-const propTypes = {
-  index: PropTypes.number.isRequired,
-  isActive: PropTypes.bool.isRequired,
-  playlist: PropTypes.string.isRequired,
-  playSong: PropTypes.func.isRequired,
-};
+interface Props {
+  index: number;
+  isActive: boolean;
+  playlist: string;
+  playSong: any;
+}
 
-class SongsBodyCardMobileEvents extends Component {
-  constructor() {
-    super();
-    this.onClick = this.onClick.bind(this);
-  }
-
-  onClick() {
-    const { index, isActive, playlist, playSong } = this.props;
+const SongsBodyCardMobileEvents = ({
+  index,
+  isActive,
+  playlist,
+  playSong,
+}: Props) => {
+  const handleClick = () => {
     if (isActive) {
-      const audioElement = document.getElementById('audio');
+      const audioElement: HTMLAudioElement = document.getElementById('audio')!;
       if (audioElement.paused) {
         audioElement.play();
       } else {
@@ -27,21 +25,17 @@ class SongsBodyCardMobileEvents extends Component {
     } else {
       playSong(playlist, index);
     }
-  }
+  };
 
-  render() {
-    return (
-      <div
-        className="songs-body-card__mobile-events"
-        onClick={this.onClick}
-        role="button"
-        aria-hidden
-        tabIndex={0}
-      />
-    );
-  }
-}
-
-SongsBodyCardMobileEvents.propTypes = propTypes;
+  return (
+    <div
+      className="songs-body-card__mobile-events"
+      onClick={handleClick}
+      role="button"
+      aria-hidden
+      tabIndex={0}
+    />
+  );
+};
 
 export default SongsBodyCardMobileEvents;

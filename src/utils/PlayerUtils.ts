@@ -1,7 +1,8 @@
-const volumeClassName = (volume) => {
+const volumeClassName = (volume:number) => {
   if (volume > 0.8) {
     return 'ion-android-volume-up';
-  } else if (volume > 0) {
+  }
+  if (volume > 0) {
     return 'ion-android-volume-down';
   }
 

@@ -1,42 +1,18 @@
 /* global document */
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
-import { SONGS_PATH } from '../constants/RouterConstants';
+import { SONGS_PATH } from 'constants/RouterConstants';
+import React, { useCallback, useEffect, useRef } from 'react';
 
-const propTypes = {
-  navigateTo: PropTypes.func.isRequired,
-};
+interface NavSearchProps {
+  navigateTo: any;
+}
 
-class NavSearch extends Component {
-  constructor(props) {
-    super(props);
-    this.onKeyDown = this.onKeyDown.bind(this);
-    this.onKeyPress = this.onKeyPress.bind(this);
-    this.input = null;
-  }
+const NavSearch = ({ navigateTo }: NavSearchProps) => {
 
-  componentDidMount() {
-    document.addEventListener('keydown', this.onKeyDown, false);
-  }
+  const inputRef = useRef<any>('')
 
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.onKeyDown, false);
-  }
-
-  onKeyDown(e) {
-    if (e.keyCode === 191) {
-      const insideInput = e.target.tagName.toLowerCase().match(/input|textarea/);
-      if (!insideInput) {
-        e.preventDefault();
-        this.input.focus();
-      }
-    }
-  }
-
-  onKeyPress(e) {
+  const handleKeyPress = useCallback((e: any) => {
     if (e.charCode === 13) {
-      const { navigateTo } = this.props;
-      const value = e.currentTarget.value.trim();
+      const value = e.target.value.trim();
       if (value !== '') {
         navigateTo({
           keys: {},
@@ -45,24 +21,39 @@ class NavSearch extends Component {
         });
       }
     }
-  }
+  }, []);
 
-  render() {
-    return (
-      <div className="nav-search">
-        <i className="nav-search__icon ion-search" />
-        <input
-          ref={(node) => { this.input = node; }}
-          className="nav-search__input"
-          placeholder="SEARCH"
-          onKeyPress={this.onKeyPress}
-          type="text"
-        />
-      </div>
-    );
-  }
-}
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyPress);
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [handleKeyPress]);
 
-NavSearch.propTypes = propTypes;
+  const onKeyDown = (e: any) => {
+    if (e.keyCode === 191) {
+      const insideInput = e.target.tagName
+        .toLowerCase()
+        .match(/input|textarea/);
+      if (!insideInput) {
+        e.preventDefault();
+        inputRef.current.focus();
+      }
+    }
+  };
+
+  return (
+    <div className="nav-search">
+      <i className="nav-search__icon ion-search" />
+      <input
+        ref={inputRef}
+        className="nav-search__input"
+        placeholder="SEARCH"
+        onKeyPress={handleKeyPress}
+        type="text"
+      />
+    </div>
+  );
+};
 
 export default NavSearch;

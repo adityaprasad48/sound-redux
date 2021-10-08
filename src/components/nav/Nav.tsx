@@ -1,32 +1,32 @@
-import PropTypes from 'prop-types';
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import { SONGS_PATH } from 'constants/RouterConstants';
 import React from 'react';
 import Link from '../Link';
-import NavSearch from '../components/NavSearch';
-import NavSession from '../components/NavSession';
-import NavUser from '../components/NavUser';
-import { SONGS_PATH } from '../constants/RouterConstants';
+import NavSearch from './NavSearch';
+import NavSession from './NavSession';
+import NavUser from './NavUser';
 
 const defaultProps = {
   navPlaylist: null,
   user: null,
 };
 
-const propTypes = {
-  fetchNewStreamSongs: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  loadNewStreamSongs: PropTypes.func.isRequired,
-  login: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired,
-  navigateTo: PropTypes.func.isRequired,
-  navPlaylist: PropTypes.shape({}),
-  navPlaylists: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  newStreamSongs: PropTypes.arrayOf(PropTypes.number).isRequired,
-  showLikes: PropTypes.bool.isRequired,
-  showPlaylist: PropTypes.bool.isRequired,
-  showStream: PropTypes.bool.isRequired,
-  streamFutureUrl: PropTypes.string.isRequired,
-  user: PropTypes.shape({}),
-};
+interface NavProps {
+  fetchNewStreamSongs: any;
+  isAuthenticated: boolean;
+  loadNewStreamSongs: any;
+  login: any;
+  logout: any;
+  navigateTo: any;
+  navPlaylist: any;
+  navPlaylists: any;
+  newStreamSongs: any;
+  showLikes: boolean;
+  showPlaylist: boolean;
+  showStream: boolean;
+  streamFutureUrl: string;
+  user: any;
+}
 
 const Nav = ({
   fetchNewStreamSongs,
@@ -43,7 +43,7 @@ const Nav = ({
   showStream,
   streamFutureUrl,
   user,
-}) => (
+}: NavProps) => (
   <div className="nav">
     <div className="nav__inner container">
       <div className="nav__section">
@@ -86,8 +86,5 @@ const Nav = ({
     </div>
   </div>
 );
-
-Nav.defaultProps = defaultProps;
-Nav.propTypes = propTypes;
 
 export default Nav;

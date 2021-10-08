@@ -1,4 +1,4 @@
-const formatSongTitle = (s) => {
+const formatSongTitle = (s:any) => {
   if (!s) {
     return '';
   }

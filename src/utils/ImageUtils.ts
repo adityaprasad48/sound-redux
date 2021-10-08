@@ -1,6 +1,6 @@
 import IMAGE_SIZES from '../constants/ImageConstants';
 
-const getImageUrl = (s, size = null) => {
+const getImageUrl = (s:any, size:any = null) => {
   if (!s) {
     return '';
   }

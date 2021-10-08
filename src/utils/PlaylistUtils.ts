@@ -1,29 +1,47 @@
 import moment from 'moment';
 import { denormalize } from 'normalizr';
-import { SESSION_LIKES_URL, SESSION_STREAM_URL, SONGS_URL } from '../constants/ApiConstants';
-import { GENRE_PLAYLIST_TYPE, GENRE_QUERY_MAP, PLAYLIST_PLAYLIST_TYPE, SEARCH_PLAYLIST_TYPE, SESSION_LIKES_PLAYLIST, SESSION_STREAM_PLAYLIST } from '../constants/PlaylistConstants';
+import {
+  SESSION_LIKES_URL,
+  SESSION_STREAM_URL,
+  SONGS_URL
+} from '../constants/ApiConstants';
+import {
+  GENRE_PLAYLIST_TYPE,
+  GENRE_QUERY_MAP,
+  PLAYLIST_PLAYLIST_TYPE,
+  SEARCH_PLAYLIST_TYPE,
+  SESSION_LIKES_PLAYLIST,
+  SESSION_STREAM_PLAYLIST
+} from '../constants/PlaylistConstants';
 import { songSchema } from '../constants/Schemas';
 
-const isFetching = (playlist, playlists) => (playlist in playlists
-  ? playlists[playlist].isFetching
-  : false
-);
+const isFetching = (playlist: any, playlists: any) =>
+  playlist in playlists ? playlists[playlist].isFetching : false;
 
-const genrePlaylistUrl = (genre, time) => {
+const genrePlaylistUrl = (genre: any, time?: any) => {
+  // @ts-ignore
   const genreUriSegment = `&tags=${GENRE_QUERY_MAP[genre] || genre}`;
-  const timeUriSegment = time ? `&created_at[from]=${moment().subtract(Number(time), 'days').format('YYYY-MM-DD%2012:00:00')}` : '';
+  const timeUriSegment = time
+    ? `&created_at[from]=${moment()
+        .subtract(Number(time), 'days')
+        .format('YYYY-MM-DD%2012:00:00')}`
+    : '';
 
   return `${SONGS_URL}${timeUriSegment}${genreUriSegment}`;
 };
 
-const searchPlaylistUrl = (search, time) => {
+const searchPlaylistUrl = (search: any, time?: any) => {
   const searchUriSegment = `&q=${search}`;
-  const timeUriSegment = time ? `&created_at[from]=${moment().subtract(Number(time), 'days').format('YYYY-MM-DD%2012:00:00')}` : '';
+  const timeUriSegment = time
+    ? `&created_at[from]=${moment()
+        .subtract(Number(time), 'days')
+        .format('YYYY-MM-DD%2012:00:00')}`
+    : '';
 
   return `${SONGS_URL}${timeUriSegment}${searchUriSegment}`;
 };
 
-const playlistUrl = (playlist) => {
+const playlistUrl = (playlist: any) => {
   const [type] = playlist.split('|');
 
   if (SESSION_STREAM_PLAYLIST) {
@@ -40,31 +58,29 @@ const playlistUrl = (playlist) => {
   }
 };
 
-const playlistNextUrl = (
-  playlist,
-  playlists,
-  oauthToken,
-) => (playlist in playlists && playlists[playlist].nextUrl
-  ? `${playlists[playlist].nextUrl}${oauthToken ? `&oauth_token=${oauthToken}` : ''}`
-  : null
-);
+const playlistNextUrl = (playlist: string, playlists: any, oauthToken?: any) =>
+  playlist in playlists && playlists[playlist].nextUrl
+    ? `${playlists[playlist].nextUrl}${
+        oauthToken ? `&oauth_token=${oauthToken}` : ''
+      }`
+    : null;
 
-const playlistSongs = (playlist, playlists, entities) => (playlist in playlists
-  ? denormalize(playlists[playlist].items, [songSchema], entities)
-  : []
-);
+const playlistSongs = (playlist: string, playlists: any, entities?: any) =>
+  playlist in playlists
+    ? denormalize(playlists[playlist].items, [songSchema], entities)
+    : [];
 
 export const playlistData = (
-  genre,
-  search,
-  showLike,
-  showPlaylist,
-  showStream,
-  time,
-  entities,
-  id,
-  oauthToken,
-  playlists,
+  genre: any,
+  search: any,
+  showLike: any,
+  showPlaylist: any,
+  showStream: any,
+  time: any,
+  entities: any,
+  id: any,
+  oauthToken: any,
+  playlists: any
 ) => {
   if (showLike) {
     const playlist = SESSION_LIKES_PLAYLIST;

@@ -1,26 +1,27 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import Link from '../components/Link';
-import Heart from './heart/Heart';
-import ArtworkPlay from '../components/ArtworkPlay';
-import SongsBodyCardMobileEvents from '../components/SongsBodyCardMobileEvents';
-import { SONG_PATH, USER_PATH } from '../constants/RouterConstants';
-import IMAGE_SIZES from '../constants/ImageConstants';
-import getImageUrl from '../utils/ImageUtils';
-import formatSongTitle from '../utils/SongUtils';
+/* eslint-disable jsx-a11y/anchor-is-valid */
 
-const propTypes = {
-  index: PropTypes.number.isRequired,
-  isActive: PropTypes.bool.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  isPlaying: PropTypes.bool.isRequired,
-  liked: PropTypes.bool.isRequired,
-  login: PropTypes.func.isRequired,
-  navigateTo: PropTypes.func.isRequired,
-  playlist: PropTypes.string.isRequired,
-  playSong: PropTypes.func.isRequired,
-  song: PropTypes.shape({}).isRequired,
-  toggleLike: PropTypes.func.isRequired,
+import ArtworkPlay from "components/ArtworkPlay";
+import Heart from "components/heart/Heart";
+import Link from "components/Link";
+import IMAGE_SIZES from "constants/ImageConstants";
+import { SONG_PATH, USER_PATH } from "constants/RouterConstants";
+import getImageUrl from "utils/ImageUtils";
+import formatSongTitle from "utils/SongUtils";
+import SongsBodyCardMobileEvents from "./SongsBodyCardMobileEvents";
+
+
+interface SongsBodyCardProps {
+  index: number;
+  isActive: boolean;
+  isAuthenticated: boolean;
+  isPlaying: boolean;
+  liked: boolean;
+  login:any;
+  navigateTo:any;
+  playlist: string;
+  playSong:any;
+  song: any;
+  toggleLike:any;
 };
 
 const SongsBodyCard = ({
@@ -35,7 +36,7 @@ const SongsBodyCard = ({
   playSong,
   song,
   toggleLike,
-}) => {
+}:SongsBodyCardProps) => {
   const { artworkUrl, id, title, user } = song;
   const { avatarUrl, username } = user;
 
@@ -103,6 +104,5 @@ const SongsBodyCard = ({
   );
 };
 
-SongsBodyCard.propTypes = propTypes;
 
 export default SongsBodyCard;

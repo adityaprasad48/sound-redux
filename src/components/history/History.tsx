@@ -1,5 +1,6 @@
 import React from 'react';
-import HistorySong from '../components/HistorySong';
+import HistorySong from './HistorySong';
+
 
 interface HistoryProps {
   isPlaying: any;

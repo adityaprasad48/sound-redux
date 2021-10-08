@@ -4,10 +4,6 @@ import Popover from '../popover/Popover';
 import HeartCount from './HeartCount';
 
 
-const defaultProps = {
-  className: '',
-  favoritingsCount: null,
-};
 
 interface HeartProps {
   className: string;
@@ -25,6 +21,8 @@ const Heart = ({
   isAuthenticated,
   liked,
   login,
+  id,
+  toggleLike,
 }: HeartProps) => {
   const handleClick = () => {
     toggleLike(id, !liked);

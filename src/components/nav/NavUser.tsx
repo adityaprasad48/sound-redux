@@ -1,22 +1,23 @@
-import PropTypes from 'prop-types';
+import LoginPopoverPanel from 'components/LoginPopoverPanel';
+import Popover from 'components/popover/Popover';
+import SessionPopoverPanel from 'components/SessionPopoverPanel';
 import React from 'react';
-import LoginPopoverPanel from '../components/LoginPopoverPanel';
-import SessionPopoverPanel from '../components/SessionPopoverPanel';
-import Popover from '../components/Popover';
-import getImageUrl from '../utils/ImageUtils';
+import getImageUrl from 'utils/ImageUtils';
 
-const defaultProps = {
-  user: null,
-};
 
-const propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
-  login: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired,
-  user: PropTypes.shape({}),
-};
+interface NavUserProps {
+  isAuthenticated: boolean;
+  login: any;
+  logout: any;
+  user: any;
+}
 
-const NavUser = ({ isAuthenticated, login, logout, user }) => {
+const NavUser = ({
+  isAuthenticated,
+  login,
+  logout,
+  user = null,
+}: NavUserProps) => {
   if (isAuthenticated) {
     const { avatarUrl } = user;
     return (
@@ -43,8 +44,5 @@ const NavUser = ({ isAuthenticated, login, logout, user }) => {
     </Popover>
   );
 };
-
-NavUser.defaultProps = defaultProps;
-NavUser.propTypes = propTypes;
 
 export default NavUser;
