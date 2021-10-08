@@ -22,7 +22,7 @@ const ArtworkPlay = ({
   };
 
   const togglePlay = () => {
-    const audioElement:HTMLAudioElement = document.getElementById('audio')!;
+    const audioElement:any = document.getElementById('audio')!;
     if (isPlaying) {
       audioElement.pause();
     } else {

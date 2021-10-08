@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
 const stickyOnScroll = (InnerComponent: any, scrollThreshold: any) => {
-  const StickyOnScrollComponent = () => {
+  const StickyOnScrollComponent = (props: any) => {
     const [sticky, setSticky] = useState(false);
 
     const handleScroll = useCallback(() => {

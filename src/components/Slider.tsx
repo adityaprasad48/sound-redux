@@ -1,96 +1,90 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* global document */
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { useEffect, useRef } from 'react';
 import offsetLeft from '../utils/DomUtils';
 
 const defaultProps = {
   className: '',
 };
 
-const propTypes = {
-  className: PropTypes.string,
-  max: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.number.isRequired,
-};
+interface Props {
+  className?: string;
+  max: number;
+  onChange: any;
+  value: number;
+}
 
-const prevent = (e) => {
+const prevent = (e: any) => {
   e.preventDefault();
   e.stopPropagation();
 };
 
-class Slider extends Component {
-  constructor() {
-    super();
-    this.onClick = this.onClick.bind(this);
-    this.onMouseDown = this.onMouseDown.bind(this);
-    this.onMouseMove = this.onMouseMove.bind(this);
-    this.onMouseUp = this.onMouseUp.bind(this);
-    this.domNode = null;
-  }
+const Slider = ({ className= '', max, onChange, value }: Props) => {
+  const divRef = useRef<any>('');
 
-  componentWillUnmount() {
-    document.removeEventListener('mousemove', this.onMouseMove);
-    document.removeEventListener('mouseup', this.onMouseUp);
-  }
-
-  onClick(e) {
-    const { max, onChange } = this.props;
+  const handleClick = (e: any) => {
     const percent =
       (e.clientX - offsetLeft(e.currentTarget)) / e.currentTarget.offsetWidth;
     onChange(percent * max);
-  }
+  };
 
-  onMouseDown() {
-    document.addEventListener('mousemove', this.onMouseMove);
-    document.addEventListener('mouseup', this.onMouseUp);
-  }
-
-  onMouseMove(e) {
-    const { domNode, props } = this;
-    const { max, onChange } = props;
-
-    const diff = e.clientX - offsetLeft(domNode);
-    const percent = Math.min(Math.max(diff / domNode.offsetWidth, 0), 1);
-    onChange(percent * max);
-  }
-
-  onMouseUp() {
-    document.removeEventListener('mousemove', this.onMouseMove);
-    document.removeEventListener('mouseup', this.onMouseUp);
-  }
-
-  render() {
-    const { className, max, value } = this.props;
-    const width = `${(value / max) * 100}%`;
-
-    return (
-      <div
-        className={`slider ${className}`}
-        onClick={this.onClick}
-        ref={(node) => {
-          this.domNode = node;
-        }}
-        role="button"
-        aria-hidden
-        tabIndex={0}
-      >
-        <div className="slider__bar">
-          {max > 0 ? (
-            <div className="slider__bar__fill" style={{ width }}>
-              <div
-                className="slider__handle"
-                onClick={prevent}
-                onMouseDown={this.onMouseDown}
-                role="button"
-                tabIndex="0"
-              />
-            </div>
-          ) : null}
-        </div>
-      </div>
+  const handleMouseMove = (e: any) => {
+    const diff = e.clientX - offsetLeft(divRef && divRef.current);
+    const percent = Math.min(
+      Math.max(diff / Number(divRef && divRef.current.offsetWidth), 0),
+      1
     );
-  }
-}
+    onChange(percent * max);
+  };
+
+  const handleMouseUp = () => {
+    document.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('mouseup', handleMouseUp);
+  };
+
+  const handleMouseDown = () => {
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  };
+
+  useEffect(
+    () =>
+      // The return block goes within useEffect().
+      function cleanUp() {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+      },
+
+    [handleMouseMove, handleMouseUp]
+  );
+
+  const width = `${(value / max) * 100}%`;
+
+  return (
+    <div
+      className={`slider ${className}`}
+      onClick={handleClick}
+      ref={divRef}
+      role="button"
+      aria-hidden
+      tabIndex={0}
+    >
+      <div className="slider__bar">
+        {max > 0 ? (
+          <div className="slider__bar__fill" style={{ width }}>
+            <div
+              className="slider__handle"
+              onClick={prevent}
+              onMouseDown={handleMouseDown}
+              role="button"
+              tabIndex={0}
+              aria-hidden
+            />
+          </div>
+        ) : null}
+      </div>
+    </div>
+  );
+};
 
 export default Slider;

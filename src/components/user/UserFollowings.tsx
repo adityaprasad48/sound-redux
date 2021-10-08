@@ -1,27 +1,34 @@
-import PropTypes from 'prop-types';
+import SidebarBody from 'components/SidebarBody';
 import React from 'react';
-import SidebarBody from '../components/SidebarBody';
-import UserFollowing from '../components/UserFollowing';
+import UserFollowing from './UserFollowing';
 
-const propTypes = {
-  followings: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  navigateTo: PropTypes.func.isRequired,
-  sidebarHeight: PropTypes.number.isRequired,
-  sticky: PropTypes.bool.isRequired,
-};
 
-const UserFollowings = ({ followings, navigateTo, sidebarHeight, sticky }) => (
+interface Props {
+  followings: any;
+  navigateTo: any;
+  sidebarHeight: number;
+  sticky: boolean;
+}
+
+const UserFollowings = ({
+  followings,
+  navigateTo,
+  sidebarHeight,
+  sticky,
+}: Props) => (
   <div
     className={`sidebar ${sticky ? 'sidebar--sticky' : ''}`}
     style={{ height: `${sidebarHeight}px` }}
   >
     <div className="sidebar__header">
       <div className="sidebar__header__left">
-        {`Following ${followings.length} User${followings.length === 1 ? '' : 's'}`}
+        {`Following ${followings.length} User${
+          followings.length === 1 ? '' : 's'
+        }`}
       </div>
     </div>
     <SidebarBody>
-      {followings.map(following => (
+      {followings.map((following: any) => (
         <UserFollowing
           following={following}
           key={following.id}
@@ -31,7 +38,5 @@ const UserFollowings = ({ followings, navigateTo, sidebarHeight, sticky }) => (
     </SidebarBody>
   </div>
 );
-
-UserFollowings.propTypes = propTypes;
 
 export default UserFollowings;

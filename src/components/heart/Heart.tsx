@@ -3,11 +3,9 @@ import LoginPopoverPanel from '../LoginPopoverPanel';
 import Popover from '../popover/Popover';
 import HeartCount from './HeartCount';
 
-
-
 interface HeartProps {
-  className: string;
-  favoritingsCount: any;
+  className?: string;
+  favoritingsCount?: any;
   id: number;
   isAuthenticated: boolean;
   liked: boolean;
@@ -16,7 +14,7 @@ interface HeartProps {
 }
 
 const Heart = ({
-  className,
+  className = '',
   favoritingsCount = null,
   isAuthenticated,
   liked,

@@ -1,45 +1,41 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
 
 import Router from './Router';
-import HistoryContainer from '../containers/HistoryContainer';
-import NavContainer from '../containers/NavContainer';
-import PlayerContainer from '../containers/PlayerContainer';
 
-const propTypes = {
-  initAuth: PropTypes.func.isRequired,
-  initEnvironment: PropTypes.func.isRequired,
-  initRouter: PropTypes.func.isRequired,
-  paths: PropTypes.arrayOf(PropTypes.string).isRequired,
-  router: PropTypes.shape({
-    keys: PropTypes.shape({}),
-    options: PropTypes.shape({}),
-    path: PropTypes.string,
-  }).isRequired,
-  routes: PropTypes.shape({}).isRequired,
-};
-
-class Root extends Component {
-  componentWillMount() {
-    const { initAuth, initEnvironment, initRouter, paths } = this.props;
-    initAuth();
-    initEnvironment();
-    initRouter(paths);
-  }
-
-  render() {
-    const { router, routes } = this.props;
-    return (
-      <div>
-        <NavContainer />
-        <Router router={router} routes={routes} />
-        <PlayerContainer />
-        <HistoryContainer />
-      </div>
-    );
-  }
+interface Props {
+  initAuth: any;
+  initEnvironment: any;
+  initRouter: any;
+  paths: string[];
+  router: any;
+  routes: any;
 }
 
-Root.propTypes = propTypes;
+const Root = ({
+  initAuth,
+  initEnvironment,
+  initRouter,
+  paths,
+  router,
+  routes,
+}: Props) => {
+  // componentWillMount() {
+  //   const { initAuth, initEnvironment, initRouter, paths } = this.props;
+  //   initAuth();
+  //   initEnvironment();
+  //   initRouter(paths);
+  // }
+
+  console.log('Root');
+
+  return (
+    <div>
+      {/* <NavContainer /> */}
+      <Router router={router} routes={routes} />
+      {/* <PlayerContainer />
+      <HistoryContainer /> */}
+    </div>
+  );
+};
 
 export default Root;

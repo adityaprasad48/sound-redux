@@ -1,126 +1,122 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
-interface Props{
- audioUrl: string;
-  onLoadedMetadata:any;
-  onLoadStart:any;
-  onPause:any;
-  onPlay:any;
-  onTimeUpdate:any;
-  onVolumeChange:any;
-  playNextSong:any;
-};
+interface Props {
+  audioUrl: string;
+  onLoadedMetadata: any;
+  onLoadStart: any;
+  onPause: any;
+  onPlay: any;
+  onTimeUpdate: any;
+  onVolumeChange: any;
+  playNextSong: any;
+}
 
-const audio = (InnerComponent:any) => {
-  const AudioComponent = () => {
-    componentDidMount() {
-      const { audioElement } = this;
-      audioElement.play();
-    }
+const audio = (InnerComponent: any) => {
+  const AudioComponent = ({
+    audioUrl,
+    onLoadedMetadata,
+    onLoadStart,
+    onPause,
+    onPlay,
+    onTimeUpdate,
+    onVolumeChange,
+    playNextSong,
+  }: Props) => {
+    const audioRef = useRef<HTMLAudioElement>().current!;
 
-    componentDidUpdate(prevProps) {
-      const { audioElement, props } = this;
-      const { audioUrl } = props;
-      if (prevProps.audioUrl !== audioUrl) {
-        audioElement.play();
-      }
-    }
+    // componentDidMount() {
+    //   const { audioElement } = this;
+    //   audioElement.play();
+    // }
+
+    // componentDidUpdate(prevProps) {
+    //   const { audioElement, props } = this;
+    //   const { audioUrl } = props;
+    //   if (prevProps.audioUrl !== audioUrl) {
+    //     audioElement.play();
+    //   }
+    // }
 
     const handleEnded = () => {
-      const { playNextSong } = this.props;
       playNextSong();
-    }
+    };
 
-    onLoadedMetadata() {
-      const { audioElement, props } = this;
-      const { onLoadedMetadata } = props;
-      onLoadedMetadata(Math.floor(audioElement.duration));
-    }
+    const handleLoadedMetadata = () => {
+      onLoadedMetadata(Math.floor(audioRef.duration));
+    };
 
-    onLoadStart() {
-      const { onLoadStart } = this.props;
+    const handleLoadStart = () => {
       onLoadStart();
-    }
+    };
 
-    onPlay() {
-      const { onPlay } = this.props;
+    const hanelePlay = () => {
       onPlay();
-    }
+    };
 
-    onPause() {
-      const { onPause } = this.props;
+    const handlePause = () => {
       onPause();
-    }
+    };
 
-    onTimeUpdate() {
-      const { audioElement, props } = this;
-      const { onTimeUpdate } = props;
-      onTimeUpdate(Math.floor(audioElement.currentTime));
-    }
+    const handleTimeUpdate = () => {
+      onTimeUpdate(Math.floor(audioRef.currentTime));
+    };
 
-    onVolumeChange() {
-      const { audioElement, props } = this;
-      const { muted, volume } = audioElement;
-      const { onVolumeChange } = props;
+    const handleVolumeChange = () => {
+      const { muted, volume } = audioRef;
       onVolumeChange(muted, volume);
-    }
+    };
 
-    changeCurrentTime(currentTime) {
-      this.audioElement.currentTime = currentTime;
-    }
+    const handlechangeCurrentTime = (currentTime: any) => {
+      audioRef.currentTime = currentTime;
+    };
 
-    changeVolume(volume) {
-      const { audioElement } = this;
-      audioElement.muted = false;
-      audioElement.volume = volume;
-    }
+    const handlechangeVolume = (volume: any) => {
+      audioRef.muted = false;
+      audioRef.volume = volume;
+    };
 
-    toggleMuted() {
-      const { audioElement } = this;
-      const { muted } = audioElement;
-      audioElement.muted = !muted;
-    }
+    const handletoggleMuted = () => {
+      const { muted } = audioRef;
+      audioRef.muted = !muted;
+    };
 
-    togglePlay() {
-      const { audioElement } = this;
-      if (audioElement.paused) {
-        audioElement.play();
+    const handletogglePlay = () => {
+      if (audioRef.paused) {
+        audioRef.play();
       } else {
-        audioElement.pause();
+        audioRef.pause();
       }
-    }
+    };
 
-      const { audioUrl } = this.props;
+    return (
+      <div>
+        {/*  eslint-disable-next-line jsx-a11y/media-has-caption */}
+        <audio
+          id="audio"
+          onEnded={handleEnded}
+          onLoadedMetadata={handleLoadedMetadata}
+          onLoadStart={handleLoadStart}
+          onPause={handlePause}
+          onPlay={hanelePlay}
+          onTimeUpdate={handleTimeUpdate}
+          onVolumeChange={handleVolumeChange}
+          // @ts-ignore
+          ref={audioRef}
+          src={audioUrl}
+        />
+        {/* <InnerComponent
+          {...state}
+          {...props}
+          changeCurrentTime={handlechangeCurrentTime}
+          changeVolume={handlechangeVolume}
+          toggleMuted={handletoggleMuted}
+          togglePlay={handletogglePlay}
+        /> */}
+      </div>
+    );
 
-      return (
-        <div>
-          <audio
-            id="audio"
-            onEnded={onEnded}
-            onLoadedMetadata={onLoadedMetadata}
-            onLoadStart={onLoadStart}
-            onPause={onPause}
-            onPlay={onPlay}
-            onTimeUpdate={onTimeUpdate}
-            onVolumeChange={onVolumeChange}
-            ref={(node) => {
-              audioElement = node;
-            }}
-            src={audioUrl}
-          />
-          <InnerComponent
-            {...state}
-            {...props}
-            changeCurrentTime={changeCurrentTime}
-            changeVolume={changeVolume}
-            toggleMuted={toggleMuted}
-            togglePlay={togglePlay}
-          />
-        </div>
-      );
-  }
-
-  return AudioComponent;
+    return AudioComponent;
+  };
 };
 
 export default audio;

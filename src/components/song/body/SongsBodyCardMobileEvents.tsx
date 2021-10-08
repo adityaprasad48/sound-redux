@@ -16,7 +16,7 @@ const SongsBodyCardMobileEvents = ({
 }: Props) => {
   const handleClick = () => {
     if (isActive) {
-      const audioElement: HTMLAudioElement = document.getElementById('audio')!;
+      const audioElement: any = document.getElementById('audio')!;
       if (audioElement.paused) {
         audioElement.play();
       } else {

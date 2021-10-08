@@ -1,7 +1,10 @@
 /* global window */
 
-const totalHeightofRows = (rowCount, rowHeight, marginBetweenRows) =>
-  (rowHeight * rowCount) + (marginBetweenRows * (rowCount - 1));
+const totalHeightofRows = (
+  rowCount: any,
+  rowHeight: any,
+  marginBetweenRows: any
+) => rowHeight * rowCount + marginBetweenRows * (rowCount - 1);
 
 const ITEMS_PER_ROW = 5;
 const MARGIN_BETWEEN_ROWS = 20;
@@ -11,7 +14,7 @@ const ROW_HEIGHT = 132;
 const THREE_ROWS_HEIGHT = totalHeightofRows(3, ROW_HEIGHT, MARGIN_BETWEEN_ROWS);
 const TWO_ROWS_HEIGHT = totalHeightofRows(2, ROW_HEIGHT, MARGIN_BETWEEN_ROWS);
 
-const scrollState = (height, count, isMobile) => {
+const scrollState = (height: any, count: any, isMobile: any) => {
   if (isMobile) {
     return {
       paddingTop: 0,
@@ -21,7 +24,7 @@ const scrollState = (height, count, isMobile) => {
     };
   }
 
-  const scrollY = window.scrollY;
+  const { scrollY } = window;
 
   let paddingTop = 0;
   let paddingBottom = 0;
@@ -32,14 +35,16 @@ const scrollState = (height, count, isMobile) => {
   const shouldPadTop = scrollY > THREE_ROWS_HEIGHT;
 
   if (shouldPadTop) {
-    const rowsToPad = Math.floor((scrollY - TWO_ROWS_HEIGHT) / rowWithMarginHeight);
+    const rowsToPad = Math.floor(
+      (scrollY - TWO_ROWS_HEIGHT) / rowWithMarginHeight
+    );
     paddingTop = rowsToPad * rowWithMarginHeight;
     start = rowsToPad * ITEMS_PER_ROW;
   }
 
   const rowsOnScreen = Math.ceil(height / rowWithMarginHeight);
   const itemsToShow = (rowsOnScreen + NUM_OF_BUFFER_ROWS) * ITEMS_PER_ROW;
-  const shouldPadBottom = count > (start + itemsToShow);
+  const shouldPadBottom = count > start + itemsToShow;
 
   if (shouldPadBottom) {
     end = start + itemsToShow;

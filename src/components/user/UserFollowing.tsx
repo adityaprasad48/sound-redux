@@ -1,17 +1,17 @@
-import PropTypes from 'prop-types';
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import Link from 'components/Link';
+import { USER_PATH } from 'constants/RouterConstants';
 import React from 'react';
-import Link from '../components/Link';
-import { USER_PATH } from '../constants/RouterConstants';
-import { addCommas } from '../utils/NumberUtils';
-import getImageUrl from '../utils/ImageUtils';
-import { getLocation } from '../utils/UserUtils';
+import getImageUrl from 'utils/ImageUtils';
+import { addCommas } from 'utils/NumberUtils';
+import { getLocation } from 'utils/UserUtils';
 
-const propTypes = {
-  navigateTo: PropTypes.func.isRequired,
-  following: PropTypes.shape({}).isRequired,
-};
+interface Props {
+  navigateTo: any;
+  following: any;
+}
 
-const UserFollowing = ({ following, navigateTo }) => {
+const UserFollowing = ({ following, navigateTo }: Props) => {
   const { avatarUrl, followersCount, id, username } = following;
 
   return (
@@ -40,14 +40,10 @@ const UserFollowing = ({ following, navigateTo }) => {
         <div className="user-following__followers__count">
           {addCommas(followersCount)}
         </div>
-        <div className="user-following__followers__text">
-          Followers
-        </div>
+        <div className="user-following__followers__text">Followers</div>
       </div>
     </div>
   );
 };
-
-UserFollowing.propTypes = propTypes;
 
 export default UserFollowing;

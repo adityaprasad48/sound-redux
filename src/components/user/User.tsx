@@ -1,117 +1,114 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import Loader from 'components/Loader';
+import SongList from 'components/song/SongList';
+import stickyOnScroll from 'components/stickyOnScroll';
+import React from 'react';
+import UserFollowings from './UserFollowings';
+import UserMain from './UserMain';
 
-import SongList from '../components/SongList';
-import Loader from '../components/Loader';
-import stickyOnScroll from '../components/stickyOnScroll';
-import UserFollowings from '../components/UserFollowings';
-import UserMain from '../components/UserMain';
 
 const defaultProps = {
   playingSongId: null,
   user: null,
 };
 
-const propTypes = {
-  fetchUserIfNeeded: PropTypes.func.isRequired,
-  followings: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  id: PropTypes.number.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  isFollowing: PropTypes.bool.isRequired,
-  likes: PropTypes.shape({}).isRequired,
-  login: PropTypes.func.isRequired,
-  navigateTo: PropTypes.func.isRequired,
-  player: PropTypes.shape({}).isRequired,
-  playingSongId: PropTypes.number,
-  playlist: PropTypes.string.isRequired,
-  playSong: PropTypes.func.isRequired,
-  profiles: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  shouldFetchUser: PropTypes.bool.isRequired,
-  sidebarHeight: PropTypes.number.isRequired,
-  sticky: PropTypes.bool.isRequired,
-  songs: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  toggleFollow: PropTypes.func.isRequired,
-  toggleLike: PropTypes.func.isRequired,
-  user: PropTypes.shape({}),
-};
-
-class User extends Component {
-  componentWillMount() {
-    const { fetchUserIfNeeded, id, playlist, shouldFetchUser } = this.props;
-    fetchUserIfNeeded(shouldFetchUser, id, playlist);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { fetchUserIfNeeded, id } = this.props;
-    if (nextProps.id !== id) {
-      fetchUserIfNeeded(nextProps.shouldFetchUser, nextProps.id, nextProps.playlist);
-    }
-  }
-
-  render() {
-    const {
-      followings,
-      isAuthenticated,
-      isFollowing,
-      likes,
-      login,
-      navigateTo,
-      player,
-      playlist,
-      playingSongId,
-      playSong,
-      profiles,
-      shouldFetchUser,
-      sidebarHeight,
-      sticky,
-      songs,
-      toggleFollow,
-      toggleLike,
-      user,
-    } = this.props;
-    if (shouldFetchUser) {
-      return <Loader className="loader--full" isLoading />;
-    }
-
-    return (
-      <div className="container">
-        <div className="user content">
-          <div className="user__main">
-            <UserMain
-              isFollowing={isFollowing}
-              profiles={profiles}
-              toggleFollow={toggleFollow}
-              user={user}
-            />
-            <SongList
-              className="user__song-list"
-              isAuthenticated={isAuthenticated}
-              likes={likes}
-              login={login}
-              navigateTo={navigateTo}
-              player={player}
-              playingSongId={playingSongId}
-              playlist={playlist}
-              playSong={playSong}
-              songs={songs}
-              toggleLike={toggleLike}
-            />
-          </div>
-          <div className="user__sidebar">
-            <UserFollowings
-              followings={followings}
-              navigateTo={navigateTo}
-              sidebarHeight={sidebarHeight}
-              sticky={sticky}
-            />
-          </div>
-        </div>
-      </div>
-    );
-  }
+interface Props {
+  fetchUserIfNeeded: any;
+  followings: any;
+  id: number;
+  isAuthenticated: boolean;
+  isFollowing: boolean;
+  likes: any;
+  login: any;
+  navigateTo: any;
+  player: any;
+  playingSongId?: number;
+  playlist: string;
+  playSong: any;
+  profiles: any;
+  shouldFetchUser: boolean;
+  sidebarHeight: number;
+  sticky: boolean;
+  songs: any;
+  toggleFollow: any;
+  toggleLike: any;
+  user?: any;
 }
 
-User.defaultProps = defaultProps;
-User.propTypes = propTypes;
+const User = ({
+  followings,
+  isAuthenticated,
+  isFollowing,
+  likes,
+  login,
+  navigateTo,
+  player,
+  playlist,
+  playingSongId,
+  playSong,
+  profiles,
+  shouldFetchUser,
+  sidebarHeight,
+  sticky,
+  songs,
+  toggleFollow,
+  toggleLike,
+  user,
+}: Props) => {
+  // componentWillMount() {
+  //   const { fetchUserIfNeeded, id, playlist, shouldFetchUser } = this.props;
+  //   fetchUserIfNeeded(shouldFetchUser, id, playlist);
+  // }
+
+  // componentWillReceiveProps(nextProps) {
+  //   const { fetchUserIfNeeded, id } = this.props;
+  //   if (nextProps.id !== id) {
+  //     fetchUserIfNeeded(
+  //       nextProps.shouldFetchUser,
+  //       nextProps.id,
+  //       nextProps.playlist
+  //     );
+  //   }
+  // }
+
+  if (shouldFetchUser) {
+    return <Loader className="loader--full" isLoading />;
+  }
+
+  return (
+    <div className="container">
+      <div className="user content">
+        <div className="user__main">
+          <UserMain
+            isFollowing={isFollowing}
+            profiles={profiles}
+            toggleFollow={toggleFollow}
+            user={user}
+          />
+          <SongList
+            className="user__song-list"
+            isAuthenticated={isAuthenticated}
+            likes={likes}
+            login={login}
+            navigateTo={navigateTo}
+            player={player}
+            playingSongId={playingSongId}
+            playlist={playlist}
+            playSong={playSong}
+            songs={songs}
+            toggleLike={toggleLike}
+          />
+        </div>
+        <div className="user__sidebar">
+          <UserFollowings
+            followings={followings}
+            navigateTo={navigateTo}
+            sidebarHeight={sidebarHeight}
+            sticky={sticky}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default stickyOnScroll(User, 50);
